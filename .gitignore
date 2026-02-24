@@ -1,6 +1,7 @@
 # R session artefacts
 .Rhistory
 .RData
+.Ruserdata
 .Rproj.user/
 *.Rproj
 
