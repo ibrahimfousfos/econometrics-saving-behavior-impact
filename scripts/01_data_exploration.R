@@ -5,13 +5,13 @@
 # Load the required libraries
 library(dplyr)
 
-# Load the dataset from the specified path into 'groupe_41'
-groupe_41 <- read.csv("C:/Users/ibrah/OneDrive/Documents/école/S7/econometrie appliquee/projet/group41.csv")
+# Load the dataset from the specified path into 'data_base'
+data_base <- read.csv("data/bank_clients_panel")
 
 # Simple commands to inspect the dataset
-head(groupe_41)
-dim(groupe_41)
-summary(groupe_41)
+head(data_base)
+dim(data_base)
+summary(data_base)
 
 
 # ==============================================================================
@@ -20,7 +20,7 @@ summary(groupe_41)
 
 # Extract lines 100 to 200 and select specific columns: 
 # ("id", "yincome", "savings", "retirement", "meeting")
-subset_data = groupe_41[100:200 , c("id", "yincome", "savings", "retirement", "meeting")]
+subset_data = data_base[100:200 , c("id", "yincome", "savings", "retirement", "meeting")]
 head(subset_data)
 
 
@@ -51,5 +51,6 @@ summary(subset_data[, c("log_yincome", "log_savings", "log_retirement", "log_sav
 # ==============================================================================
 
 # Calculate the proportions/shares of the dummy exogenous variable ('meeting')
-table(groupe_41$meeting)
-prop.table(table(groupe_41$meeting))
+table(data_base$meeting)
+prop.table(table(data_base$meeting))
+
