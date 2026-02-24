@@ -7,9 +7,9 @@ library(ggplot2) # Plotting
 library(plm)     # Panel data models
 
 # Load database
-groupe_41_pt3 <- read.csv("C:/Users/ibrah/OneDrive/Documents/école/S7/econometrie_appliquee/projet/group41.csv")
+data_base_pt3 <- read.csv("data/bank_clients_panel.csv")
 
-head(groupe_41_pt3, 20)
+head(data_base_pt3, 20)
 
 
 # ==============================================================================
@@ -17,7 +17,7 @@ head(groupe_41_pt3, 20)
 # ==============================================================================
 
 # Creation of necessary variables for the Difference-in-Differences (DiD) analysis
-df_did <- groupe_41_pt3 %>%
+df_did <- data_base_pt3 %>%
   mutate(
     # Post-Treatment Dummy Variable (1 if t >= 2, 0 otherwise)
     post = ifelse(time >= 2, 1, 0),
@@ -122,4 +122,5 @@ m_placebo <- lm(log_savings ~ did_fake + post_fake + treated + log_yincome,
 stargazer(m_hetero, m_placebo, type = "text",
           title = "Tests de Robustesse",
           column.labels = c("Hétérogénéité Genre", "Test Placebo (t=0 vs t=1)"),
+
           covariate.labels = c("Interaction DiD", "Femme", "DiD x Femme", "DiD Placebo (Faux Traitement)"))
