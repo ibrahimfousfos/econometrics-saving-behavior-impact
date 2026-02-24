@@ -6,7 +6,7 @@
 library(dplyr)
 
 # Load the dataset from the specified path into 'data_base'
-data_base <- read.csv("data/bank_clients_panel")
+data_base <- read.csv("data/bank_clients_panel.csv")
 
 # Simple commands to inspect the dataset
 head(data_base)
@@ -53,4 +53,5 @@ summary(subset_data[, c("log_yincome", "log_savings", "log_retirement", "log_sav
 # Calculate the proportions/shares of the dummy exogenous variable ('meeting')
 table(data_base$meeting)
 prop.table(table(data_base$meeting))
+
 
