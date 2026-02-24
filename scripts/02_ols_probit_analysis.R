@@ -3,7 +3,7 @@
 # ==============================================================================
 
 # Import the dataset
-groupe_41_pt2 <- read.csv("C:/Users/ibrah/OneDrive/Documents/école/S7/econometrie appliquee/projet/group41.csv")
+data_base_pt2 <- read.csv("data/bank_clients_panel.csv")
 
 
 # ==============================================================================
@@ -11,9 +11,9 @@ groupe_41_pt2 <- read.csv("C:/Users/ibrah/OneDrive/Documents/école/S7/econometr
 # ==============================================================================
 
 # Choosing 2 variables of interest: savings and retirement
-groupe_41_pt2 <- groupe_41_pt2 %>% mutate(meeting = as.integer(meeting)) 
+data_base_pt2 <- data_base_pt2 %>% mutate(meeting = as.integer(meeting)) 
 
-sum_by_group <- groupe_41_pt2 %>%
+sum_by_group <- _pt2 %>%
   group_by(meeting) %>%
   summarise(
     n = n(),
@@ -33,16 +33,16 @@ print(sum_by_group)
 # ==============================================================================
 
 # Logarithmic transformation (if variable = 0, log(variable + 1) is used to yield 0)
-groupe_41_pt2$log_yincome <- ifelse(groupe_41_pt2$yincome == 0, log(groupe_41_pt2$yincome + 1), log(groupe_41_pt2$yincome))
-groupe_41_pt2$log_savings <- ifelse(groupe_41_pt2$savings == 0, log(groupe_41_pt2$savings + 1), log(groupe_41_pt2$savings))
-groupe_41_pt2$log_retirement <- ifelse(groupe_41_pt2$retirement == 0, log(groupe_41_pt2$retirement + 1), log(groupe_41_pt2$retirement))
+data_base_pt2$log_yincome <- ifelse(data_base_pt2$yincome == 0, log(data_base_pt2$yincome + 1), log(data_base_pt2$yincome))
+data_base_pt2$log_savings <- ifelse(data_base_pt2$savings == 0, log(data_base_pt2$savings + 1), log(data_base_pt2$savings))
+data_base_pt2$log_retirement <- ifelse(data_base_pt2$retirement == 0, log(data_base_pt2$retirement + 1), log(data_base_pt2$retirement))
 
 # Simple rates of the 2 main variables
-groupe_41_pt2$saving_rate <- groupe_41_pt2$savings / groupe_41_pt2$yincome
-groupe_41_pt2$retirement_rate <- groupe_41_pt2$retirement / groupe_41_pt2$yincome
+data_base_pt2$saving_rate <- data_base_pt2$savings / data_base_pt2$yincome
+data_base_pt2$retirement_rate <- data_base_pt2$retirement / data_base_pt2$yincome
 
 # Same transformation but for the post-treatment period (time > 1)
-groupe_post_D <- subset(groupe_41_pt2, time > 1) 
+groupe_post_D <- subset(data_base_pt2, time > 1) 
 
 groupe_post_D$log_yincome <- ifelse(groupe_post_D$yincome == 0, log(groupe_post_D$yincome + 1), log(groupe_post_D$yincome))
 groupe_post_D$log_savings <- ifelse(groupe_post_D$savings == 0, log(groupe_post_D$savings + 1), log(groupe_post_D$savings))
@@ -56,7 +56,7 @@ head(groupe_post_D)
 # ==============================================================================
 
 # Create a common unit: mean savings of the 3 post-treatment periods (2, 3, 4)
-unit_post_savings <- groupe_41_pt2 %>%
+unit_post_savings <- data_base_pt2 %>%
   filter(time >= 2) %>%
   group_by(id, meeting) %>%
   summarise(sav_post = mean(savings, na.rm = TRUE), .groups = "drop")
@@ -89,7 +89,7 @@ p2
 # ==============================================================================
 
 # Since we have 3 periods, we use the mean and the log of the means
-unit_post <- groupe_41_pt2 %>%
+unit_post <- data_base_pt2 %>%
   filter(time >= 2) %>%
   group_by(id, meeting) %>%
   summarise(sav_post = mean(savings, na.rm = TRUE),
@@ -114,7 +114,7 @@ SCATTER
 # ==============================================================================
 
 # Build PRE covariates at the unit level (t < 2)
-pre_unit <- groupe_41_pt2 %>%
+pre_unit <- data_base_pt2 %>%
   filter(time < 2) %>%
   group_by(id, meeting, female) %>%
   summarise(
@@ -175,7 +175,7 @@ print(chi_f)
 # ==============================================================================
 
 # Mean of savings post-treatment at t = 2, 3, 4
-post_unit_6 <- groupe_41_pt2 %>%
+post_unit_6 <- data_base_pt2 %>%
   filter(time >= 2) %>%
   group_by(id, meeting) %>%
   summarise(
@@ -214,7 +214,7 @@ simple_ols
 # ==============================================================================
 
 # Mean of variables post-treatment
-post_unit_7 <- groupe_41_pt2 %>%
+post_unit_7 <- data_base_pt2 %>%
   filter(time >= 2) %>%
   group_by(id, meeting, female) %>%
   summarise(
@@ -224,7 +224,7 @@ post_unit_7 <- groupe_41_pt2 %>%
   )
 
 # Mean of variables pre-treatment
-pre_unit_7 <- groupe_41_pt2 %>%
+pre_unit_7 <- data_base_pt2 %>%
   filter(time < 2) %>%
   group_by(id) %>%
   summarise(
@@ -245,3 +245,4 @@ summary(m7_levels)
 # 2) Log OLS
 m7_logs <- lm(logY_post ~ meeting + log_inc_pre + logY_pre + female, data = dat7)
 summary(m7_logs)
+
