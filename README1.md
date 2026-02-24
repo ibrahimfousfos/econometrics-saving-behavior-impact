@@ -51,10 +51,6 @@ econometrics-saving-behavior-impact/
 ├── feedback/
 │   └── feedback_summary.md
 │
-├── outputs/
-│   ├── figures/
-│   └── tables/
-│
 ├── .gitignore
 └── README.md
 ```
