@@ -5,6 +5,7 @@
 library(dplyr)   # Data manipulation
 library(ggplot2) # Plotting
 library(plm)     # Panel data models
+library(stargazer)
 
 # Load database
 data_base_pt3 <- read.csv("data/bank_clients_panel.csv")
@@ -124,3 +125,4 @@ stargazer(m_hetero, m_placebo, type = "text",
           column.labels = c("Hétérogénéité Genre", "Test Placebo (t=0 vs t=1)"),
 
           covariate.labels = c("Interaction DiD", "Femme", "DiD x Femme", "DiD Placebo (Faux Traitement)"))
+
