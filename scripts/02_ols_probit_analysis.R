@@ -1,6 +1,9 @@
 # ==============================================================================
 # DATA IMPORT
 # ==============================================================================
+library(dplyr)
+library(ggplot2)
+library(margins)
 
 # Import the dataset
 data_base_pt2 <- read.csv("data/bank_clients_panel.csv")
@@ -13,7 +16,7 @@ data_base_pt2 <- read.csv("data/bank_clients_panel.csv")
 # Choosing 2 variables of interest: savings and retirement
 data_base_pt2 <- data_base_pt2 %>% mutate(meeting = as.integer(meeting)) 
 
-sum_by_group <- _pt2 %>%
+sum_by_group <- data_base_pt2 %>%
   group_by(meeting) %>%
   summarise(
     n = n(),
@@ -245,4 +248,5 @@ summary(m7_levels)
 # 2) Log OLS
 m7_logs <- lm(logY_post ~ meeting + log_inc_pre + logY_pre + female, data = dat7)
 summary(m7_logs)
+
 
