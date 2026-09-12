@@ -1,7 +1,7 @@
 # ==============================================================================
 # 1. SETUP & DATA LOADING
 # ==============================================================================
-
+# ce changement est surtout fait pour voir ce que ca fait de creer une branche et me préparer à des postes de dev ia
 # Load the required libraries
 library(dplyr)
 
